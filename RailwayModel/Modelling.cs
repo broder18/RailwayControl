@@ -1,4 +1,4 @@
-﻿using RailwayModel.Configure;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +15,8 @@ namespace RailwayModel
         public Modelling(Model railway)
         {
             this.RailWay = railway;
-            var links = railway.Links;
-            var stations = railway.Stations;
-            DictInd = GetDict(stations);
-            AdjacensyTable = GetTableLength(links, stations.Length);
+            DictInd = GetDict(RailWay.Stations);
+            AdjacensyTable = GetTableLength(RailWay.Links, RailWay.Stations.Length);
         }
 
         private Dictionary<int, int> GetDict(Station[] stations)
@@ -26,8 +24,7 @@ namespace RailwayModel
             Dictionary<int, int> dict = new Dictionary<int, int>();
             for (int ind = 0; ind < stations.Length; ind++)
             {
-                int id= stations[ind].Id;
-                dict.Add(id, ind);
+                dict.Add(stations[ind].GetHashCode(), ind);
             }
             return dict;
         }
@@ -37,11 +34,8 @@ namespace RailwayModel
             int[,] table = new int[arraySize, arraySize];
             for (int i = 0; i < links.Length; i++)
             {
-                int from = links[i].FromTo[0].Id; 
-                int to = links[i].FromTo[1].Id;
-
-                table[DictInd[from], DictInd[to]] = links[i].Length;
-                table[DictInd[to], DictInd[from]] = links[i].Length;
+                table[DictInd[links[i].From.GetHashCode()], DictInd[links[i].To.GetHashCode()]] = links[i].Length;
+                table[DictInd[links[i].To.GetHashCode()], DictInd[links[i].From.GetHashCode()]] = links[i].Length;
 
             }
             return table;
@@ -72,8 +66,8 @@ namespace RailwayModel
                 {
                     
                     Train train = stackTrain.Dequeue();
-                    int from = train.Path[step - 1].Id;
-                    int to = train.Path[step].Id;
+                    int from = train.Path[step - 1].GetHashCode();
+                    int to = train.Path[step].GetHashCode();
                     int distance = AdjacensyTable[DictInd[from], DictInd[to]];
 
                     if (step == train.Path.Length - 1 || distance == 0)
@@ -81,14 +75,14 @@ namespace RailwayModel
                         continue;
                     }
 
-                    distance += timeId[DictInd[from]];
+                    distance += timeId[DictInd[train.Path[step - 1].GetHashCode()]];
 
-                    if (distance == timeId[DictInd[to]])
+                    if (distance == timeId[DictInd[train.Path[step].GetHashCode()]])
                     {
                         return true;
                     }
 
-                    timeId[DictInd[to]] = distance;
+                    timeId[DictInd[train.Path[step].GetHashCode()]] = distance;
                     stackTrain.Enqueue(train);
                 }
                 step++;

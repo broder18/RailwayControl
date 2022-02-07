@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using RailwayModel.Configure;
 using RailwayModel;
-
 
 
 namespace ControlSystem
@@ -16,7 +14,6 @@ namespace ControlSystem
             Model railway = box1.GetModelBox1();
             ReadWriteOption.SerializeMode(railway);
             railway = ReadWriteOption.DeserializeMode();
-            
             Modelling modelling = new Modelling(railway);
             modelling.Start();
 

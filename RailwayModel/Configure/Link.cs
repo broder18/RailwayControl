@@ -5,23 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace RailwayModel.Configure
+namespace RailwayModel
 {
-    
+    [Serializable]
     public class Link
     {
         
-        public Station[] FromTo { get; set; }
+        public Station From { get; set; }
+        public Station To { get; set; }
         
         public int Length { get;  set; }
-        public Link()
-        {
-            
-        }
-        public Link(Station[] stations, int len)
-        {
-            this.FromTo = stations;
-            this.Length = len;
-        }
+
     }
 }

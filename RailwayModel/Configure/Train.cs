@@ -4,21 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RailwayModel.Configure
+namespace RailwayModel
 {
-    
+    [Serializable]
     public class Train
     {
         public Station[] Path { get;  set; }
-        public Train()
-        {
-
-        }
-        public Train(Station[] stations)
-        {
-            Path = stations;
-        }
-
-        
+     
     }
 }

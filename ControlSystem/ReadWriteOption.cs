@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Xml.Serialization;
-using RailwayModel.Configure;
+using System.Runtime.Serialization.Formatters.Binary;
+using RailwayModel;
 using System.IO;
 
 namespace ControlSystem
@@ -13,7 +13,7 @@ namespace ControlSystem
             string filename = Console.ReadLine();
             
 
-            XmlSerializer formatter = new XmlSerializer(typeof(Model));
+            BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream stream = new FileStream(filename, FileMode.OpenOrCreate))
             {
                 formatter.Serialize(stream, railway);
@@ -29,9 +29,9 @@ namespace ControlSystem
             try
             {
                 Model railway;
+                BinaryFormatter formatter = new BinaryFormatter();
                 using (FileStream stream = new FileStream(filename, FileMode.Open))
                 {
-                    XmlSerializer formatter = new XmlSerializer(typeof(Model));
                     railway = (Model)formatter.Deserialize(stream);
                 }
                 return railway;
