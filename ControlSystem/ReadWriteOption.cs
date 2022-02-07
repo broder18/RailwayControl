@@ -9,7 +9,7 @@ namespace ControlSystem
     {
         public static void SerializeMode(Model railway)
         {
-            Console.WriteLine("Укажите путь xml файл для записи: ");
+            Console.WriteLine("Укажите путь .dat файл для записи: ");
             string filename = Console.ReadLine();
             
 
@@ -23,7 +23,7 @@ namespace ControlSystem
 
         public static Model DeserializeMode()
         {
-            Console.WriteLine("Укажите путь xml файл для чтения: ");
+            Console.WriteLine("Укажите путь .dat файл для чтения: ");
             string filename = Console.ReadLine();
 
             try

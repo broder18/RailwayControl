@@ -16,8 +16,6 @@ namespace ControlSystem
             railway = ReadWriteOption.DeserializeMode();
             Modelling modelling = new Modelling(railway);
             modelling.Start();
-
-
         }
     }
 }
